@@ -11,18 +11,24 @@ class Car(object):
         self.path_finder = path_finder
         self.passengers = []
         self.position = Position(0, 0)
-        self.best_path = [Position(0, 1), Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2)]  # todo dummy info
+        self.best_path = []  # todo dummy info Position(0, 1), Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2)
 
         self.city = city
 
     def move(self):
         print("car move")
+
+        # Nothing to do, idle the car and cause traffic
+        if len(self.passengers) == 0 and len(self.city.get_pickup_positions()) == 0:
+            return
+
         # Upon initialization, PathSimple will route to the nearest passenger
         # After picking up a passenger, it will then create a new path
         if len(self.best_path) == 0:
             print("Generating new path")
             self.best_path = self.path_finder.get_best_path(
                 current_position=self.position,
+                passengers=self.passengers,
                 pickup_positions=self.city.get_pickup_positions()
             )
 

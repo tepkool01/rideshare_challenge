@@ -31,9 +31,8 @@ if __name__ == '__main__':
                 print("passenger validation failed")
 
         city.add_pickup_requests(pickup_requests)
-        print_status(city, car)
+        print_status(city, car)  # this is a visualization tool to see the steps the car takes
 
-        # todo: If no destination in mind for the car yet
         car.move()
 
 
