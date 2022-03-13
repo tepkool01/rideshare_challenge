@@ -15,6 +15,17 @@ class City:
     def get_pickup_requests(self) -> list[Passenger]:
         return self.pickup_requests
 
+    def get_pickup_requests_by_location(self, location: Position) -> list[Passenger]:
+        pickup_requests = []
+        for req in self.get_pickup_requests():
+            if location == req.start_position:
+                pickup_requests.append(req)
+        return pickup_requests
+
+    def remove_pickup_request(self, pickup_requests: list[Passenger]) -> None:
+        for req in pickup_requests:
+            self.pickup_requests.remove(req)
+
     def add_pickup_requests(self, pickup_requests: list[Passenger]) -> None:
         if len(pickup_requests) > 0:
             self.pickup_requests.extend(pickup_requests)

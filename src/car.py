@@ -16,21 +16,36 @@ class Car(object):
         self.city = city
 
     def move(self):
-        # No path established, find new path
+        print("car move")
+        # Upon initialization, PathSimple will route to the nearest passenger
+        # After picking up a passenger, it will then create a new path
         if len(self.best_path) == 0:
+            print("Generating new path")
             self.best_path = self.path_finder.get_best_path(
                 current_position=self.position,
                 pickup_positions=self.city.get_pickup_positions()
             )
 
+        # Moving to new location
         self.position = self.best_path.pop(0)
-        #todo pickup passenger, and get new path?
-        print("car move")
 
-    def pickup(self, passenger: Passenger) -> None:
+        # Are there any passengers at this location
+        pickups = self.city.get_pickup_requests_by_location(location=self.position)
+        if len(pickups) > 0:
+            self.passengers.extend(pickups)  # Pick up the passengers
+            self.city.remove_pickup_request(pickups)  # Remove from pickup queue in the city
+            print(f"picked up passenger(s): {pickups}")
+
+        # Is this a drop-off point?
+        for passenger in self.passengers:
+            if self.position == passenger.end_position:
+                print(f"Dropping off {passenger}")
+                self.passengers.remove(passenger)
+
+    def pickup(self, passenger: Passenger) -> None: # todo USE ME (in move command)?!
         self.passengers.append(passenger)
 
-    def dropoff(self, passenger: Passenger):
+    def dropoff(self, passenger: Passenger): # todo USE ME (in move command)!
         self.passengers.remove(passenger)
 
     def get_passengers(self) -> list[Passenger]:

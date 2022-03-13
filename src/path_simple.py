@@ -6,6 +6,14 @@ class PathSimple(PathAlgorithmInterface):
     @staticmethod
     def get_best_path(current_position: Position, pickup_positions: list[Position]) -> list[Position]:
         closest_passenger = _find_closest_passenger(current_position, pickup_positions)
+
+        # If has passengers, then navigate to 1st passenger's spot
+
+        # else, find closest pickup request, and navigate there
+
+
+        # Alternate between x and y to stay in 'middle' most times
+
         print(current_position)
         print(closest_passenger)
         return [Position(0, 0)]
