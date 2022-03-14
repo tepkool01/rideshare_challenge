@@ -30,7 +30,7 @@ allow for dependency inversion/swappable components.
 The biggest problem was to determine what is meant by '*fast as possible*'. What is the measurement of success here?
 Could it be the average wait times of passengers, or the median? Is it acceptable to have someone remain in the car for
 an extremely long time while maximizing the lowest time for the population? This problem statement does not address the
-human element or practical situations. 
+human element or practical situations. The current assumption is that the car would navigate to the nearest passenger, which would become the fastest time.
 
 The existing algorithm is simple. It navigates to the nearest pick-up point upon initialization, and then proceeds to the
 drop-off point. While in route, if the car visits an intersection where someone else is waiting, the vehicle will automatically 
