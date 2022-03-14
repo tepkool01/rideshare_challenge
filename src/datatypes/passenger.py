@@ -17,5 +17,5 @@ class Passenger:
         if len(self.end) != 2:
             raise ValueError
         # other validation here...
-        self.start_position = Position(self.start[0], self.start[1])
+        self.start_position = Position(self.start[0], self.start[1])  # Creating 'computed' properties for Positions
         self.end_position = Position(self.end[0], self.end[1])

@@ -23,7 +23,6 @@ class PathSimple(PathAlgorithmInterface):
 
         # print(f"Navigating to: {destination}")
 
-        # Todo: do 2 while loops, if one picks up more passengers along the way, that's the better path
         best_path = []
         x = current_position.x
         y = current_position.y
@@ -39,22 +38,6 @@ class PathSimple(PathAlgorithmInterface):
 
             best_path.append(Position(x, y))
 
-        # best_path_y = []
-        # x = current_position.x
-        # y = current_position.y
-        # while x != destination.x or y != destination.y:
-        #     if x < destination.x:
-        #         x += 1
-        #     elif x > destination.x:
-        #         x -= 1
-        #     elif y < destination.y:
-        #         y += 1
-        #     elif y > destination.y:
-        #         y -= 1
-        #
-        #     best_path.append(Position(x, y))
-
-        # print(f"best path: {best_path}")
         if len(best_path) == 0:
             raise Exception("no path found")
 

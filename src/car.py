@@ -8,13 +8,18 @@ from interfaces.path_algorithm_interface import PathAlgorithmInterface
 
 class Car(object):
     def __init__(self, path_finder: Type[PathAlgorithmInterface], city: City):
+        # Injecting references to execute the algorithm and validate city pick-up points
         self.path_finder = path_finder
-        self.passengers = []
-        self.position = Position(0, 0)
-        self.best_path = []
         self.city = city
 
+        self.passengers = []
+        self.position = Position(0, 0)  # Car's starting position
+        self.best_path = []  # Saving the path from the algorithm as part of the vehicle's state
+
     def move(self):
+        """
+        This is the car's 'advance time' functionality where it determines a best path and executes passenger exchanges
+        """
         print(f"car position: x={self.position.x},y={self.position.y}; passengers: {self._join_passenger_names(self.passengers)}")
 
         # Upon initialization, PathSimple will route to the nearest passenger
@@ -37,6 +42,9 @@ class Car(object):
         self.perform_passenger_exchanges()
 
     def perform_passenger_exchanges(self):
+        """
+        If this is a passenger's final destination or if they car has visited a pickup point, exchanges will occur
+        """
         # Are there any passengers at this location
         pickups = self.city.get_pickup_requests_by_location(location=self.position)
         if len(pickups) > 0:

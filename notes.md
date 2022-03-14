@@ -17,9 +17,13 @@ Loading in the JSON could've been it's own function and not incorperated the asp
 
 ----
 testing
-python -m unittest test.test_main
+pip install coverage
+python -m unittest
+coverage run -m unittest
+coverage report -m
+specific test: python -m unittest test.test_passenger
 
 running
 python src/main.py
 
-pip install coverage
+

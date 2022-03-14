@@ -4,7 +4,6 @@ from datatypes.position import Position
 
 class City:
     def __init__(self, columns=10, rows=10):
-        # self.grid = [[None for _ in range(x)] for _ in range(y)]
         self.columns = columns
         self.rows = rows
         self.pickup_requests = []
