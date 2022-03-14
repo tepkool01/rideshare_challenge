@@ -61,5 +61,4 @@ class TestMain(unittest.TestCase):
                 ]
             }
         ], self.car, self.city)
-        print(self.car.position)
         self.assertEqual(self.car.position, Position(x=8, y=7))
