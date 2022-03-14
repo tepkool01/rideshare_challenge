@@ -11,50 +11,51 @@ class Car(object):
         self.path_finder = path_finder
         self.passengers = []
         self.position = Position(0, 0)
-        self.best_path = []  # todo dummy info Position(0, 1), Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2)
-
+        self.best_path = []
         self.city = city
 
     def move(self):
-        print("car move")
-
-        # Nothing to do, idle the car and cause traffic
-        if len(self.passengers) == 0 and len(self.city.get_pickup_positions()) == 0:
-            return
+        print(f"car position: x={self.position.x},y={self.position.y}; passengers: {self._join_passenger_names(self.passengers)}")
 
         # Upon initialization, PathSimple will route to the nearest passenger
         # After picking up a passenger, it will then create a new path
         if len(self.best_path) == 0:
-            print("Generating new path")
-            self.best_path = self.path_finder.get_best_path(
-                current_position=self.position,
-                passengers=self.passengers,
-                pickup_positions=self.city.get_pickup_positions()
-            )
+            try:
+                self.best_path = self.path_finder.get_best_path(
+                    current_position=self.position,
+                    passengers=self.passengers,
+                    pickup_positions=self.city.get_pickup_positions()
+                )
+            except Exception as e:
+                print(str(e))
+                return
 
         # Moving to new location
         self.position = self.best_path.pop(0)
 
+        # Evaluate this location en route for any people to pick up, drop off, etc
+        self.perform_passenger_exchanges()
+
+    def perform_passenger_exchanges(self):
         # Are there any passengers at this location
         pickups = self.city.get_pickup_requests_by_location(location=self.position)
         if len(pickups) > 0:
-            self.passengers.extend(pickups)  # Pick up the passengers
-            self.city.remove_pickup_request(pickups)  # Remove from pickup queue in the city
-            print(f"picked up passenger(s): {pickups}")
+            self.pickup(pickups)
 
         # Is this a drop-off point?
         for passenger in self.passengers:
             if self.position == passenger.end_position:
-                print(f"Dropping off {passenger}")
-                self.passengers.remove(passenger)
+                self.dropoff(passenger)
 
-    def pickup(self, passenger: Passenger) -> None: # todo USE ME (in move command)?!
-        self.passengers.append(passenger)
+    def pickup(self, passengers: list[Passenger]) -> None:
+        print(f"picking up passenger(s): {self._join_passenger_names(passengers)}")
+        self.passengers.extend(passengers)  # Pick up the passengers
+        self.city.remove_pickup_request(passengers)  # Remove from pickup queue in the city
 
-    def dropoff(self, passenger: Passenger): # todo USE ME (in move command)!
+    def dropoff(self, passenger: Passenger):
+        print(f"dropping off {passenger.name}")
         self.passengers.remove(passenger)
 
-    def get_passengers(self) -> list[Passenger]:
-        return self.passengers
-
-
+    @staticmethod
+    def _join_passenger_names(passengers) -> str:
+        return ', '.join([p.name for p in passengers])

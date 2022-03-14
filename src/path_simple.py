@@ -15,13 +15,13 @@ class PathSimple(PathAlgorithmInterface):
         :return: A list of positions the car should navigate towards
         """
         if len(passengers) > 0:
-            print("Has passengers!")
+            # print("Has passengers!")
             destination = passengers[0].end_position  # Navigate to first passenger's spot / FIFO
         else:
-            print("Find nearest")
+            # print("Find nearest")
             destination = _find_closest_passenger(current_position, pickup_positions)  # Find closest pickup request
 
-        print(f"Navigating to: {destination}")
+        # print(f"Navigating to: {destination}")
 
         # Todo: do 2 while loops, if one picks up more passengers along the way, that's the better path
         best_path = []
@@ -54,7 +54,9 @@ class PathSimple(PathAlgorithmInterface):
         #
         #     best_path.append(Position(x, y))
 
-        print(f"best path: {best_path}")
+        # print(f"best path: {best_path}")
+        if len(best_path) == 0:
+            raise Exception("no path found")
 
         return best_path
 

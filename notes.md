@@ -8,3 +8,18 @@
 
 ----
 Should I have used the visitor pattern here? In hindsight this seems like a good fit.
+
+performance considerations with loops, optimization would be better suited for keys
+
+would need to add more tests, bounds checking, better algorithms, etc. What about negative grid coordinates?
+
+Loading in the JSON could've been it's own function and not incorperated the aspect of time
+
+----
+testing
+python -m unittest test.test_main
+
+running
+python src/main.py
+
+pip install coverage

@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from .position import Position
+from datatypes.position import Position
 
 
 @dataclass
